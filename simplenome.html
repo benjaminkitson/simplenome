@@ -14,11 +14,27 @@
     <div class="on-button">
 
       <i class="fas fa-power-off"></i>
-
+      <audio src='click.wav'></audio>
     </div>
 
   </div>
 
+<script>
+
+  const sound = document.querySelector('audio')
+  const powerButton = document.querySelector('.on-button')
+
+  function playSound() {
+    console.log(sound)
+    sound.currentTime = 0
+    sound.play()
+  }
+
+  powerButton.addEventListener('click', playSound)
+
+  sound
+
+</script>
 
 </body>
 </html>
