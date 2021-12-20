@@ -49,6 +49,7 @@
     if (poweredOn == true) {
       clearInterval(metronome)
       if (milliseconds >= 100) {
+        playSound()
         metronome = setInterval(playSound, milliseconds)
         }
     }
@@ -73,6 +74,7 @@
           poweredOn = false
         } else {
           this.classList.add('switched-on')
+          playSound()
           metronome = setInterval(playSound, milliseconds)
         }
       } else {
