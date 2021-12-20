@@ -17,22 +17,37 @@
       <audio src='click.wav'></audio>
     </div>
 
+    <input type="text" class="tempo">
+
   </div>
 
 <script>
 
-  const sound = document.querySelector('audio')
-  const powerButton = document.querySelector('.on-button')
+  const sound = document.querySelector('audio');
+  const powerButton = document.querySelector('.on-button');
+  const tempo = document.querySelector('tempo')
+  let poweredOn = false;
+  let metronome
 
   function playSound() {
-    console.log(sound)
-    sound.currentTime = 0
-    sound.play()
+    sound.currentTime = 0;
+    sound.play();
   }
 
-  powerButton.addEventListener('click', playSound)
+  function activate() {
+    poweredOn = poweredOn ? false : true
 
-  sound
+    if (poweredOn) {
+      metronome = setInterval(playSound, 1000)
+    } else {
+      console.log(metronome)
+      clearInterval(metronome)
+    }
+
+  }
+
+  powerButton.addEventListener('click', activate);
+
 
 </script>
 
