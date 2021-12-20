@@ -16,7 +16,7 @@ body {
 
 .metronome-container {
   width: 25vw;
-  height: 25vw;
+  height: 28vw;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -36,6 +36,16 @@ body {
   border-radius: 999em;
 }
 
+.switched-on {
+  border-color: rgb(0, 128, 255);
+  color: rgb(0, 128, 255);
+}
+
+.on-button.switched-on:hover {
+  border-color: rgb(0, 128, 255);
+  color: rgb(0, 128, 255);
+}
+
 .on-button:hover {
   border-color: rgb(101, 140, 180);
   color: rgb(101, 140, 180);
@@ -47,10 +57,25 @@ body {
 }
 
 .tempo {
-  font-size: 20px;
+  width: 10vw;
+  text-align: center;
+  font-size: 50px;
   background: black;
   color: white;
   border: none;
   border-bottom: 2px solid white;
   box-shadow: none;
+}
+
+.tempo-field {
+  margin-top: 3vw;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 20vw
+}
+
+.bpm {
+  color: white;
+  font-size: 50px;
 }
