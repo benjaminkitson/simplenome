@@ -21,7 +21,9 @@
       <input type="text" class="tempo">
       <div class="bpm">bpm</div>
     </div>
-
+    <div class="text">
+      Enter a tempo up to 600bpm
+    </div>
   </div>
 
 <script>
@@ -33,22 +35,25 @@
   let milliseconds;
 
   function playSound() {
-      sound.currentTime = 0;
-      sound.play();
+      if (milliseconds != Infinity) {
+        sound.currentTime = 0;
+        sound.play();
+      }
     }
 
   function setMilliseconds() {
     let tempo = document.querySelector('.tempo').value
     milliseconds = 60000 / tempo
-    console.log(milliseconds)
 
 
     if (poweredOn == true) {
-    clearInterval(metronome)
-    metronome = setInterval(playSound, milliseconds)
+      clearInterval(metronome)
+      if (milliseconds >= 100) {
+        metronome = setInterval(playSound, milliseconds)
+        }
     }
 
-    if (milliseconds == Infinity && poweredOn == true) {
+    if ((!tempo || milliseconds < 100) && poweredOn == true) {
       poweredOn = false;
       clearInterval(metronome)
       powerButton.classList.remove('switched-on');
@@ -57,20 +62,28 @@
 
   function activate() {
     if (milliseconds) {
+      let tempo = document.querySelector('.tempo').value
       poweredOn = poweredOn ? false : true
-      console.log(poweredOn)
       if (poweredOn && milliseconds) {
-        if (milliseconds < 100) {
+        if (milliseconds < 100 || !milliseconds || !tempo) {
           this.classList.add('invalid')
+          setTimeout(() => {
+            this.classList.remove('invalid')
+          }, 100)
+          poweredOn = false
         } else {
           this.classList.add('switched-on')
           metronome = setInterval(playSound, milliseconds)
         }
       } else {
         this.classList.remove('switched-on')
-        console.log(metronome)
         clearInterval(metronome)
       }
+    } else {
+      this.classList.add('invalid')
+      setTimeout(() => {
+        this.classList.remove('invalid')
+      }, 100)
     }
   }
 
