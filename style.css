@@ -41,6 +41,11 @@ body {
   color: rgb(0, 128, 255);
 }
 
+.invalid {
+  border-color: rgb(181, 17, 17);
+  color: rgb(181, 17, 17);
+}
+
 .on-button.switched-on:hover {
   border-color: rgb(0, 128, 255);
   color: rgb(0, 128, 255);
