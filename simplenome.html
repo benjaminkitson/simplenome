@@ -40,30 +40,42 @@
   function setMilliseconds() {
     let tempo = document.querySelector('.tempo').value
     milliseconds = 60000 / tempo
+    console.log(milliseconds)
+
+
     if (poweredOn == true) {
     clearInterval(metronome)
     metronome = setInterval(playSound, milliseconds)
     }
+
+    if (milliseconds == Infinity && poweredOn == true) {
+      poweredOn = false;
+      clearInterval(metronome)
+      powerButton.classList.remove('switched-on');
+    }
   }
 
-
   function activate() {
-    poweredOn = poweredOn ? false : true
-    console.log(poweredOn)
-    if (poweredOn && milliseconds) {
-      this.classList.add('switched-on')
-      metronome = setInterval(playSound, milliseconds)
-    } else {
-      this.classList.remove('switched-on')
-      console.log(metronome)
-      clearInterval(metronome)
+    if (milliseconds) {
+      poweredOn = poweredOn ? false : true
+      console.log(poweredOn)
+      if (poweredOn && milliseconds) {
+        if (milliseconds < 100) {
+          this.classList.add('invalid')
+        } else {
+          this.classList.add('switched-on')
+          metronome = setInterval(playSound, milliseconds)
+        }
+      } else {
+        this.classList.remove('switched-on')
+        console.log(metronome)
+        clearInterval(metronome)
+      }
     }
-
   }
 
   powerButton.addEventListener('click', activate);
   window.addEventListener('keyup', setMilliseconds);
-
 
 </script>
 
