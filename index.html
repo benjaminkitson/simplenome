@@ -30,7 +30,7 @@
 <script>
 
   const sound = new Audio()
-  sound.autoplay = true
+  sound.src = 'click.wav';
   const powerButton = document.querySelector('.on-button');
   let poweredOn = false;
   let metronome;
@@ -39,7 +39,6 @@
 
   function playSound() {
       if (milliseconds != Infinity) {
-        sound.src = 'click.wav'
         sound.currentTime = 0;
         sound.play();
       }
