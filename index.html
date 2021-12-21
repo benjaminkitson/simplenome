@@ -15,7 +15,7 @@
     <div class="on-button">
 
       <i class="fas fa-power-off"></i>
-      <audio src='click.wav'></audio>
+      <!-- <audio src='click.wav'></audio> -->
     </div>
 
     <div class="tempo-field">
@@ -29,7 +29,7 @@
 
 <script>
 
-  const sound = document.querySelector('audio');
+  const sound = new Audio()
   sound.autoplay = true
   const powerButton = document.querySelector('.on-button');
   let poweredOn = false;
@@ -39,6 +39,7 @@
 
   function playSound() {
       if (milliseconds != Infinity) {
+        sound.src = 'click.wav'
         sound.currentTime = 0;
         sound.play();
       }
