@@ -65,6 +65,7 @@
         if (poweredOn == false) return
         metronome = setTimeout(function() {
           (poweredOn == true) ? playSound() : clearTimeout(metronome);
+          console.log('hello')
           switchOn();
         }, milliseconds)
       }
