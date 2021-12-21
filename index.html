@@ -28,16 +28,16 @@
 
 <script>
 
-  const sound = new Audio();
+  const sound = new Audio()
   sound.src = 'click.wav';
   const powerButton = document.querySelector('.on-button');
   let poweredOn = false;
   let metronome;
   let milliseconds;
+  let buttonBlocked = false
 
   function playSound() {
     if (milliseconds != Infinity) {
-      console.log("hello")
       sound.currentTime = 0;
       sound.play();
     }
@@ -46,50 +46,37 @@
   function setMilliseconds() {
     let tempo = document.querySelector('.tempo').value
     milliseconds = 60000 / tempo
+  }
 
-
-    if (poweredOn == true) {
-      clearInterval(metronome)
-      if (milliseconds >= 100) {
-        playSound()
-        metronome = setInterval(playSound, milliseconds)
-      }
-    }
-
-    if ((!tempo || milliseconds < 100) && poweredOn == true) {
-      poweredOn = false;
-      clearInterval(metronome)
-      powerButton.classList.remove('switched-on');
-    }
+  function disableButton() {
+    buttonBlocked = true
+    setTimeout(function () {
+      buttonBlocked = false
+    }, 900)
   }
 
   function activate() {
-    if (milliseconds) {
-      let tempo = document.querySelector('.tempo').value
-      poweredOn = poweredOn ? false : true
-      if (poweredOn && milliseconds) {
-        if (milliseconds < 100 || !milliseconds || !tempo) {
-          this.classList.add('invalid')
-          setTimeout(() => {
-            this.classList.remove('invalid')
-          }, 100)
-          poweredOn = false
-        } else {
-          this.classList.add('switched-on')
-          playSound()
-          metronome = setInterval(playSound, milliseconds)
-        }
-      } else {
-        this.classList.remove('switched-on')
-        clearInterval(metronome)
+    if (buttonBlocked == true) return
+    poweredOn = poweredOn ? false : true;
+    if (poweredOn == true) {
+      powerButton.classList.add('switched-on')
+      playSound()
+      function switchOn() {
+        if (poweredOn == false) return
+        metronome = setTimeout(function () {
+          (poweredOn == true) ? playSound() : clearTimeout(metronome);
+          console.log('hello')
+          switchOn();
+        }, milliseconds)
       }
+      switchOn()
     } else {
-      this.classList.add('invalid')
-      setTimeout(() => {
-        this.classList.remove('invalid')
-      }, 100)
+      disableButton();
+      powerButton.classList.remove('switched-on')
     }
   }
+
+
 
   powerButton.addEventListener('click', activate);
   window.addEventListener('keyup', setMilliseconds);
