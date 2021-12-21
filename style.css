@@ -5,6 +5,7 @@
 }
 
 body {
+  margin: 0;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -15,8 +16,8 @@ body {
 }
 
 .metronome-container {
-  width: 25vw;
-  height: 32vw;
+  width: 100vw;
+  height: 550px;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -32,12 +33,12 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 17vw;
-  height: 17vw;
-  font-size: 10vw;
+  width: 275px;
+  height: 275px;
+  font-size: 100px;
   font-weight: 100;
   color: grey;
-  border: 1.5vw solid grey;
+  border: 15px solid grey;
   border-radius: 999em;
   transition: all 0.2s;
 }
@@ -68,12 +69,12 @@ body {
 
 .on-button:active {
   color: grey;
-  border: 1.5vw solid grey;
+  border: 15px solid grey;
   transition: all 0.2s;
 }
 
 .tempo {
-  width: 10vw;
+  width: 100px;
   text-align: center;
   font-size: 50px;
   background: black;
@@ -88,7 +89,7 @@ body {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  width: 20vw
+  width: 200px;
 }
 
 .bpm {
