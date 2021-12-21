@@ -15,7 +15,6 @@
     <div class="on-button">
 
       <i class="fas fa-power-off"></i>
-      <!-- <audio src='click.wav'></audio> -->
     </div>
 
     <div class="tempo-field">
@@ -29,7 +28,8 @@
 
 <script>
 
-  const sound = document.querySelector('audio');
+  const sound = new Audio;
+  sound.url = 'click.wav'
   const powerButton = document.querySelector('.on-button');
   let poweredOn = false;
   let metronome;
@@ -94,6 +94,7 @@
   window.addEventListener('keyup', setMilliseconds);
 
 </script>
+
 
 
 </body>
