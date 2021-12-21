@@ -15,8 +15,8 @@ body {
 }
 
 .metronome-container {
-  width: 25vw;
-  height: 32vw;
+  width: 400px;
+  height: 500px;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -32,12 +32,12 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 17vw;
-  height: 17vw;
-  font-size: 10vw;
+  width: 300px;
+  height: 300px;
+  font-size: 100px;
   font-weight: 100;
   color: grey;
-  border: 1.5vw solid grey;
+  border: 10px solid grey;
   border-radius: 999em;
   transition: all 0.2s;
 }
