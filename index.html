@@ -69,7 +69,6 @@
         metronome = setTimeout(function () {
           let sound = new Audio()
           sound.src = 'click.wav';
-          powerButton.classList.add('switched-on')
           (poweredOn == true) ? playSound() : clearTimeout(metronome);
           console.log('hello')
           switchOn();
