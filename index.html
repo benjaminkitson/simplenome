@@ -34,7 +34,7 @@
   let metronome;
   let milliseconds;
   let buttonBlocked = false
-  const sound = new Audio()
+  let sound = new Audio()
   sound.src = 'click.wav';
 
   function playSound() {
@@ -60,13 +60,14 @@
     if (buttonBlocked == true) return
     poweredOn = poweredOn ? false : true;
     if (poweredOn == true) {
-      const sound = new Audio()
+      let sound = new Audio()
       sound.src = 'click.wav';
       powerButton.classList.add('switched-on')
       playSound(sound)
       function switchOn() {
         if (poweredOn == false) return
         metronome = setTimeout(function () {
+          let sound = new Audio()
           sound.src = 'click.wav';
           powerButton.classList.add('switched-on')
           (poweredOn == true) ? playSound() : clearTimeout(metronome);
