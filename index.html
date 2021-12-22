@@ -29,17 +29,18 @@
 <script>
 
 
-  sound.autoplay = true;
   const powerButton = document.querySelector('.on-button');
   let poweredOn = false;
   let metronome;
   let milliseconds;
   let buttonBlocked = false
+  const sound = new Audio()
+  sound.src = 'click.wav';
 
-  function playSound(noise) {
+  function playSound() {
     if (milliseconds != Infinity) {
-      noise.currentTime = 0;
-      noise.play();
+      sound.currentTime = 0;
+      sound.play();
     }
   }
 
@@ -66,7 +67,9 @@
       function switchOn() {
         if (poweredOn == false) return
         metronome = setTimeout(function () {
-          (poweredOn == true) ? playSound(sound) : clearTimeout(metronome);
+          sound.src = 'click.wav';
+          powerButton.classList.add('switched-on')
+          (poweredOn == true) ? playSound() : clearTimeout(metronome);
           console.log('hello')
           switchOn();
         }, milliseconds)
