@@ -28,8 +28,7 @@
 
 <script>
 
-  const sound = new Audio()
-  sound.src = 'click.wav';
+
   sound.autoplay = true;
   const powerButton = document.querySelector('.on-button');
   let poweredOn = false;
@@ -37,10 +36,10 @@
   let milliseconds;
   let buttonBlocked = false
 
-  function playSound() {
+  function playSound(noise) {
     if (milliseconds != Infinity) {
-      sound.currentTime = 0;
-      sound.play();
+      noise.currentTime = 0;
+      noise.play();
     }
   }
 
@@ -60,12 +59,14 @@
     if (buttonBlocked == true) return
     poweredOn = poweredOn ? false : true;
     if (poweredOn == true) {
+      const sound = new Audio()
+      sound.src = 'click.wav';
       powerButton.classList.add('switched-on')
-      playSound()
+      playSound(sound)
       function switchOn() {
         if (poweredOn == false) return
         metronome = setTimeout(function () {
-          (poweredOn == true) ? playSound() : clearTimeout(metronome);
+          (poweredOn == true) ? playSound(sound) : clearTimeout(metronome);
           console.log('hello')
           switchOn();
         }, milliseconds)
