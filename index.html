@@ -67,8 +67,6 @@
       function switchOn() {
         if (poweredOn == false) return
         metronome = setTimeout(function () {
-          let sound = new Audio()
-          sound.src = 'click.mp3';
           (poweredOn == true) ? playSound() : clearTimeout(metronome);
           console.log('hello')
           switchOn();
