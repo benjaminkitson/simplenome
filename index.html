@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -7,7 +8,9 @@
   <title>SimpleNome</title>
   <link rel='stylesheet' href='style.css'>
   <link rel="icon" type="image/png" href="/icon.png" sizes="96x96">
-  <script src="https://kit.fontawesome.com/999a85aa00.js" crossorigin="anonymous"></script></head>
+  <script src="https://kit.fontawesome.com/999a85aa00.js" crossorigin="anonymous"></script>
+</head>
+
 <body>
 
   <div class="metronome-container">
@@ -15,6 +18,7 @@
     <div class="on-button">
 
       <i class="fas fa-power-off"></i>
+      <audio src='click.wav'></audio>
     </div>
 
     <div class="tempo-field">
@@ -26,69 +30,80 @@
     </div>
   </div>
 
-<script>
+  <script>
 
-  const AudioContext = window.AudioContext || window.webkitAudioContext;
-  const audioCtx = new AudioContext();
+    const sound = document.querySelector('audio');
+    const powerButton = document.querySelector('.on-button');
+    let poweredOn = false;
+    let metronome;
+    let milliseconds;
 
-  const powerButton = document.querySelector('.on-button');
-  let poweredOn = false;
-  let metronome;
-  let milliseconds;
-  let buttonBlocked = false
-  let sound = new Audio()
-  sound.src = 'click.mp3';
-
-  function playSound() {
-    if (milliseconds != Infinity) {
-      sound.currentTime = 0;
-      sound.play();
-    }
-  }
-
-  function setMilliseconds() {
-    let tempo = document.querySelector('.tempo').value
-    milliseconds = 60000 / tempo
-  }
-
-  function disableButton() {
-    buttonBlocked = true
-    setTimeout(function () {
-      buttonBlocked = false
-    }, 900)
-  }
-
-  function activate() {
-    if (buttonBlocked == true) return
-    poweredOn = poweredOn ? false : true;
-    if (poweredOn == true) {
-      let sound = new Audio()
-      sound.src = 'click.mp3';
-      powerButton.classList.add('switched-on')
-      playSound(sound)
-      function switchOn() {
-        if (poweredOn == false) return
-        metronome = setTimeout(function () {
-          (poweredOn == true) ? playSound() : clearTimeout(metronome);
-          console.log('hello')
-          switchOn();
-        }, milliseconds)
+    function playSound() {
+      if (milliseconds != Infinity) {
+        sound.currentTime = 0;
+        sound.play();
       }
-      switchOn()
-    } else {
-      disableButton();
-      powerButton.classList.remove('switched-on')
     }
-  }
+
+    function setMilliseconds() {
+      let tempo = document.querySelector('.tempo').value
+      milliseconds = 60000 / tempo
 
 
+      if (poweredOn == true) {
+        clearInterval(metronome)
+        if (milliseconds >= 100) {
+          playSound()
+          metronome = setInterval(playSound, milliseconds)
+        }
+      }
 
-  powerButton.addEventListener('click', activate);
-  window.addEventListener('keyup', setMilliseconds);
+      if ((!tempo || milliseconds < 100) && poweredOn == true) {
+        poweredOn = false;
+        clearInterval(metronome)
+        powerButton.classList.remove('switched-on');
+      }
+    }
 
-</script>
+    function activate() {
+      if (milliseconds) {
+        let tempo = document.querySelector('.tempo').value
+        poweredOn = poweredOn ? false : true
+        if (poweredOn && milliseconds) {
+          if (milliseconds < 100 || !milliseconds || !tempo) {
+            this.classList.add('invalid')
+            setTimeout(() => {
+              this.classList.remove('invalid')
+            }, 100)
+            poweredOn = false
+          } else {
+            this.classList.add('switched-on')
+            playSound()
+            metronome = setInterval(playSound, milliseconds)
+          }
+        } else {
+          this.classList.remove('switched-on')
+          clearInterval(metronome)
+        }
+      } else {
+        this.classList.add('invalid')
+        setTimeout(() => {
+          this.classList.remove('invalid')
+        }, 100)
+      }
+    }
+
+    powerButton.addEventListener('click', activate);
+    window.addEventListener('keyup', setMilliseconds);
+
+  </script>
+
+</body>
+
+</html>
 
 
 
 </body>
+
 </html>
