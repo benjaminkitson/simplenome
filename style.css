@@ -65,6 +65,7 @@ body {
 .on-button:hover {
   background:rgb(35, 34, 34);
   transition: all 0.2s;
+  cursor: pointer;
 }
 
 .on-button:active {
