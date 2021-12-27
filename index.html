@@ -48,48 +48,39 @@
     function setMilliseconds() {
       let tempo = document.querySelector('.tempo').value
       milliseconds = 60000 / tempo
-
-
       if (poweredOn == true) {
+        console.log(milliseconds)
         clearInterval(metronome)
-        if (milliseconds >= 100) {
+        if (milliseconds >= 100 && milliseconds !== Infinity) {
+          powerButton.classList.remove('invalid')
+          powerButton.classList.add('switched-on');
           playSound()
           metronome = setInterval(playSound, milliseconds)
+        } else if (!tempo || milliseconds < 100 || milliseconds === Infinity) {
+          console.log("hello")
+          clearInterval(metronome)
+          powerButton.classList.remove('switched-on');
+          powerButton.classList.add('invalid')
         }
-      }
-
-      if ((!tempo || milliseconds < 100) && poweredOn == true) {
-        poweredOn = false;
-        clearInterval(metronome)
-        powerButton.classList.remove('switched-on');
       }
     }
 
     function activate() {
-      if (milliseconds) {
-        let tempo = document.querySelector('.tempo').value
-        poweredOn = poweredOn ? false : true
-        if (poweredOn && milliseconds) {
-          if (milliseconds < 100 || !milliseconds || !tempo) {
-            this.classList.add('invalid')
-            setTimeout(() => {
-              this.classList.remove('invalid')
-            }, 100)
-            poweredOn = false
-          } else {
-            this.classList.add('switched-on')
-            playSound()
-            metronome = setInterval(playSound, milliseconds)
-          }
+      let tempo = document.querySelector('.tempo').value
+      poweredOn = poweredOn ? false : true
+      console.log(poweredOn)
+      if (poweredOn) {
+        if (milliseconds < 100 || !milliseconds || !tempo) {
+          this.classList.add('invalid')
         } else {
-          this.classList.remove('switched-on')
-          clearInterval(metronome)
+          this.classList.add('switched-on')
+          playSound()
+          metronome = setInterval(playSound, milliseconds)
         }
       } else {
-        this.classList.add('invalid')
-        setTimeout(() => {
-          this.classList.remove('invalid')
-        }, 100)
+        this.classList.remove('invalid')
+        this.classList.remove('switched-on')
+        clearInterval(metronome)
       }
     }
 
