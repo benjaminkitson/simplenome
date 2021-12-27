@@ -54,7 +54,6 @@
         if (milliseconds >= 100 && milliseconds !== Infinity) {
           powerButton.classList.remove('invalid')
           powerButton.classList.add('switched-on');
-          playSound()
           metronome = setInterval(playSound, milliseconds)
         } else if (!tempo || milliseconds < 100 || milliseconds === Infinity) {
           console.log("hello")
