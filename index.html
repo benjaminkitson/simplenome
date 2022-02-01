@@ -18,7 +18,7 @@
     <div class="on-button">
 
       <i class="fas fa-power-off"></i>
-      <audio src='click.wav'></audio>
+      <audio src='click.mp3'></audio>
     </div>
 
     <div class="tempo-field">
@@ -32,7 +32,7 @@
 
   <script>
 
-    const sound = document.querySelector('audio');
+
     const powerButton = document.querySelector('.on-button');
     let poweredOn = false;
     let metronome;
@@ -40,9 +40,16 @@
 
     function playSound() {
       if (milliseconds != Infinity) {
-        sound.currentTime = 0;
+        const sound = document.querySelector('audio');
         sound.play();
       }
+    }
+
+    function repeatSound(milliseconds) {
+      metronome = setTimeout(() => {
+        repeatSound(milliseconds)
+        playSound()
+      }, milliseconds)
     }
 
     function setMilliseconds() {
@@ -50,14 +57,14 @@
       milliseconds = 60000 / tempo
       if (poweredOn == true) {
         console.log(milliseconds)
-        clearInterval(metronome)
+        clearTimeout(metronome)
         if (milliseconds >= 100 && milliseconds !== Infinity) {
           powerButton.classList.remove('invalid')
           powerButton.classList.add('switched-on');
-          metronome = setInterval(playSound, milliseconds)
+          repeatSound(milliseconds)
         } else if (!tempo || milliseconds < 100 || milliseconds === Infinity) {
           console.log("hello")
-          clearInterval(metronome)
+          clearTimeout(metronome)
           powerButton.classList.remove('switched-on');
           powerButton.classList.add('invalid')
         }
@@ -74,12 +81,12 @@
         } else {
           this.classList.add('switched-on')
           playSound()
-          metronome = setInterval(playSound, milliseconds)
+          repeatSound(milliseconds)
         }
       } else {
         this.classList.remove('invalid')
         this.classList.remove('switched-on')
-        clearInterval(metronome)
+        clearTimeout(metronome)
       }
     }
 
